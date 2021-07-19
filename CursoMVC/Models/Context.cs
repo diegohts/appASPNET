@@ -9,11 +9,16 @@ namespace CursoMVC.Models
 {
     public class Context :DbContext
     {
-        public DbSet<Categoria> Categorias { get; set; }
+        public virtual DbSet<Categoria> Categorias { get; set; }
+        public DbSet<Produto> Produto { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
         {
             optionsBuilder.UseSqlServer(connectionString:@"Server=(localdb)\mssqllocaldb;Database=Cursomvc;Integrated Security=TRUE");
         }
-        public DbSet<CursoMVC.Models.Produto> Produto { get; set; }
+
+        public virtual void SetModified(object entity) 
+        {
+            Entry(entity).State = EntityState.Modified;
+        }
     }
 }
